@@ -1,4 +1,8 @@
+# Mnist
 
+*This example is a Substra implementation of on [the MNIST example from Keras](https://keras.io/examples/vision/mnist_convnet/), inspired from [Substra's Titanic Example](https://github.com/SubstraFoundation/substra/blob/master/examples/titanic/)*
+
+In this example, we'll see how to setup an objective with cross-validation in mind and how to train algorithms.
 ## Prerequisites
 
 In order to run this example, you'll need to:
@@ -10,9 +14,12 @@ In order to run this example, you'll need to:
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
 * create a substra profile to define the substra network to target, for instance:
     ```sh
-    substra config --profile node-1 --username node-1 --password 'p@$swr0d44' http://substra-backend.node-1.com
-    substra login --profile node-1
+    substra config --profile node-1 http://substra-backend.node-1.com
+    substra login --profile node-1 --username node-1 --password 'p@$swr0d44'
     ```
+* checkout this repository
+
+All commands in this example are run from the `substra/examples/titanic/` folder.
 
 ## Data preparation
 
@@ -39,7 +46,7 @@ These classes provide a simple yet rigid structure that will make algorithms pre
 
 ## Writing a simple algorithm
 
-You'll find under `assets/algo_cnn` an implementation of the cnn model in the [Keras example](https://keras.io/examples/mnist_cnn/). Like the metrics and opener scripts, it relies on a
+You'll find under `assets/algo_cnn` an implementation of the cnn model in the [Keras example](https://keras.io/examples/vision/mnist_convnet/). Like the metrics and opener scripts, it relies on a
 class imported from `substratools` that greatly simplifies the writing process. You'll notice that it handles not only
 the train and predict tasks but also a lot of data preprocessing.
 
