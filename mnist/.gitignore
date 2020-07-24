@@ -1,11 +1,8 @@
 assets_keys.json
 algo_keys.json
-algo_constant.zip
 algo_cnn.zip
-algo_constant.tar.gz
 metrics.zip
 obj_keys.json
-algo_constant_keys.json
 algo_cnn_keys.json
 
 assets/train_data
