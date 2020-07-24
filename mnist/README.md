@@ -2,7 +2,7 @@
 
 *This example is a Substra implementation of on [the MNIST example from Keras](https://keras.io/examples/vision/mnist_convnet/), inspired from [Substra's Titanic Example](https://github.com/SubstraFoundation/substra/blob/master/examples/titanic/)*
 
-In this example, we'll see how to setup an objective with cross-validation in mind and how to train algorithms.
+In this example, we'll see how to setup an objective and how to train algorithms on the MNIST dataset.
 ## Prerequisites
 
 In order to run this example, you'll need to:
