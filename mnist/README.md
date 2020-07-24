@@ -9,7 +9,7 @@ In order to run this example, you'll need to:
 
 * use Python 3
 * have [Docker](https://www.docker.com/) installed
-* [install the `substra` cli](../../README.md#install)
+* [install the `substra` cli](https://github.com/SubstraFoundation/substra#install)
 * [install the `substratools` library](https://github.com/substrafoundation/substra-tools)
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
 * create a substra profile to define the substra network to target, for instance:
