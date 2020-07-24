@@ -19,7 +19,7 @@ In order to run this example, you'll need to:
     ```
 * checkout this repository
 
-All commands in this example are run from the `substra/examples/titanic/` folder.
+All commands in this example are run from the `mnist` folder.
 
 ## Data preparation
 
