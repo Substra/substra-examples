@@ -18,7 +18,7 @@ class Metrics(tools.Metrics):
         """
         #invert predictions for the log_loss function (take the REAL label as reference)
         y_pred_inverted = 1-y_pred
-        return log_loss(y_true, y_pred_inverted)
+        return log_loss(y_true, y_pred_inverted, labels=["TRUE","FAKE"])
 
 
 if __name__ == "__main__":

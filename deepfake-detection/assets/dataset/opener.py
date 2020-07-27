@@ -1,6 +1,6 @@
 import substratools as tools
 import os
-import glob
+from pathlib import Path
 import numpy as np
 import pandas as pd
 
@@ -13,8 +13,8 @@ class Opener(tools.Opener):
 
         for folder in folders:
 
-            X_files_current = glob.glob(os.path.join(folder, "x*.npy"))
-            y_files_current = glob.glob(os.path.join(folder, "y*.npy"))
+            X_files_current = Path(folder).rglob('x*.npy')
+            y_files_current = Path(folder).rglob('y*.npy')
 
             X_files.extend(X_files_current)
             y_files.extend(y_files_current)

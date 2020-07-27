@@ -38,8 +38,8 @@ class Algo(tools.algo.Algo):
     frames_per_video = None
     face_extractor = None
     input_size = None
-
     gpu = None
+    root_path = os.path.dirname(__file__)
 
     def _normalize_X(self, X):
         # mean and standard deviation from the set of images used to train the resnet,
@@ -137,7 +137,7 @@ class Algo(tools.algo.Algo):
 
         #find gpu if there is one, else use cpu
         self.gpu = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        print(self.gpu)
+        print("torch.device: ", self.gpu)
 
         print("Current working directory:", os.getcwd())
 
@@ -145,17 +145,17 @@ class Algo(tools.algo.Algo):
         self.face_extractor = self._load_face_extractor()
 
         if not models: #if input model is not given
-            print("no input model, creating a new one")
+            print("No input model, creating a new one pretrained on ImageNet")
             model = self._init_new_model()
             #load a pretrained Resnet on ImageNet for the deepfake detection model (result : 0.7268 on train_data_samples_0 to 4)
-            """ model scores:
+            """ model scores (log-loss):
             result on train_data_samples_0 to 4 when trained on 0_4: 0.4787
             result on train_data_samples_0 to 4 when trained on all train_data_damples: 0.4557
             result on test_data_samples when trained on all train_data_damples: 0.5779 
             result on test_data_samples when trained 2* on all train_data_damples: 0.5733 (on cpu: Elapsed 4918.225055 sec. Average per video: 15.369453 sec)
             """
-            self.fc = nn.Linear(2048, 1000)
-            checkpoint = torch.load("assets/algo/deepfakes-inference-demo/resnext50_32x4d-7cdf4587.pth")
+            model.fc = nn.Linear(2048, 1000)
+            checkpoint = torch.load(os.path.join(self.root_path,"deepfakes-inference-demo/resnext50_32x4d-7cdf4587.pth"))
             model.load_state_dict(checkpoint)
             # Override the existing FC layer with a new one.
             model.fc = nn.Linear(2048, 1)
@@ -212,7 +212,7 @@ class Algo(tools.algo.Algo):
         #init and load the face extractor (implemented in deepfakes-inference-demo/helpers/face_extract_1)
         face_extractor = self._load_face_extractor()
 
-        #TODO: remove these lines
+        #load the trained model by humananalog for higher scores
         """
         #init model 
         model = self._init_new_model()
@@ -220,7 +220,7 @@ class Algo(tools.algo.Algo):
         #load a pretrained Resnet on ImageNet+DFDC for the deepfake detection model 
         #result : 0.3639 on train_data_samples_0 to 4
         # 0.3299 on test_data_samples
-        checkpoint = torch.load("assets/algo/deepfakes-inference-demo/resnext.pth", map_location=self.gpu) 
+        checkpoint = torch.load(os.path.join(self.root_path,"deepfakes-inference-demo/resnext.pth", map_location=self.gpu) 
         model.load_state_dict(checkpoint)
         """
 
@@ -340,15 +340,15 @@ class Algo(tools.algo.Algo):
         """
         import sys
 
-        sys.path.insert(0, "assets/algo/blazeface-pytorch")
-        sys.path.insert(0, "assets/algo/deepfakes-inference-demo")
+        sys.path.insert(0, os.path.join(self.root_path,"blazeface-pytorch"))
+        sys.path.insert(0, os.path.join(self.root_path,"deepfakes-inference-demo"))
 
         #Load the face detection model BlazeFace, based on https://github.com/tkat0/PyTorch_BlazeFace/ 
         from blazeface import BlazeFace
         facedet = BlazeFace().to(self.gpu)
         #Load the pretrained weights
-        facedet.load_weights("assets/algo/blazeface-pytorch/blazeface.pth")
-        facedet.load_anchors("assets/algo/blazeface-pytorch/anchors.npy")
+        facedet.load_weights(os.path.join(self.root_path,"blazeface-pytorch/blazeface.pth"))
+        facedet.load_anchors(os.path.join(self.root_path,"blazeface-pytorch/anchors.npy"))
         #Set the module in evaluation mode
         _ = facedet.train(False)
 
