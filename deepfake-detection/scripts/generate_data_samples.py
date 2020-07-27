@@ -125,11 +125,11 @@ for conf in train_test_configs:
 # save data samples
 for conf in train_test_configs:
     for i, data_sample in enumerate(conf['data_samples_content_x']):
-        filename = os.path.join(conf['data_samples_root'], f'data_sample_{i}/x_data_sample_{i}.npy')
+        filename = os.path.join(conf['data_samples_root'], f'data_sample_{i}/features/x_data_sample_{i}.npy')
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         np.save(filename,data_sample)
     for i, data_sample in enumerate(conf['data_samples_content_y']):
-        filename = os.path.join(conf['data_samples_root'], f'data_sample_{i}/y_data_sample_{i}.npy')
+        filename = os.path.join(conf['data_samples_root'], f'data_sample_{i}/labels/y_data_sample_{i}.npy')
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         np.save(filename,data_sample)
 
