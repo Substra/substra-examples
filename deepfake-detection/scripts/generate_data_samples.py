@@ -1,6 +1,6 @@
 """
 Script to generate data to be registered to Substra
-Mnist example
+deepfake-detection example
 """
 
 import os
@@ -16,18 +16,17 @@ def get_meta_from_json(path):
     return df
 
 def load_data_DFDC(data_path):
-    DATA_FOLDER = pathlib.Path(data_path)
-    print(f"Loading DFDC data from {DATA_FOLDER}")
+    DFDC_FOLDER = pathlib.Path(data_path)
+    print(f"Loading DFDC data from {DFDC_FOLDER}")
 
     #load data
-    TRAIN_SAMPLE_FOLDER = 'train_sample_videos'
+    DATA_FOLDER = 'train_sample_videos'
 
-    print(f"Train samples: {len(os.listdir(os.path.join(DATA_FOLDER, TRAIN_SAMPLE_FOLDER)))}")
+    print(f"# of files in data folder: {len(os.listdir(os.path.join(DFDC_FOLDER, DATA_FOLDER)))}")
     
-
     # check files type
 
-    train_list = list(os.listdir(os.path.join(DATA_FOLDER, TRAIN_SAMPLE_FOLDER)))
+    train_list = list(os.listdir(os.path.join(DFDC_FOLDER, DATA_FOLDER)))
     ext_dict = []
     for file in train_list:
         file_ext = file.split('.')[1]
@@ -42,42 +41,39 @@ def load_data_DFDC(data_path):
     print(f"JSON file: {json_file}")
 
     #load metadata and stored data
-    meta_df = get_meta_from_json(os.path.join(DATA_FOLDER, TRAIN_SAMPLE_FOLDER, json_file))
+    meta_df = get_meta_from_json(os.path.join(DFDC_FOLDER, DATA_FOLDER, json_file))
     meta = np.array(list(meta_df.index))
     meta_labels = np.array(list(meta_df.label))
-    #TODO : tester le bon fonctionnement du path
-    storage = np.array([os.path.join(DATA_FOLDER, TRAIN_SAMPLE_FOLDER, file) for file in train_list if  file.endswith('mp4')])
-    print(f"Train Metadata: {meta.shape[0]}, Folder: {storage.shape[0]}")
+
+    storage = np.array([os.path.join(DFDC_FOLDER, DATA_FOLDER, file) for file in train_list if  file.endswith('mp4')])
+    print(f"# of files in metadata: {meta.shape[0]}, # of videos: {storage.shape[0]}")
 
 
-    ## option 1 : mettre les fichiers entiers dans des arrays
+    ## option 1 (deprecated): put entire files in arrays
     """
     print(f"videos: {storage}")
     
-    print(os.path.isfile(os.path.join(DATA_FOLDER, TRAIN_SAMPLE_FOLDER, storage[0])))
+    print(os.path.isfile(os.path.join(DFDC_FOLDER, DATA_FOLDER, storage[0])))
     data = []
     for file in storage: 
         print(file)
-        video = read_video(os.path.join(DATA_FOLDER, TRAIN_SAMPLE_FOLDER, file)) 
+        video = read_video(os.path.join(DFDC_FOLDER, DATA_FOLDER, file)) 
         #data.append(video)
-        full_path = os.path.join(DATA_FOLDER,"tmp", file)
+        full_path = os.path.join(DFDC_FOLDER,"tmp", file)
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
-        np.save(full_path, video) #fichier décompressé -> 1 Go pour une video de 2 à 10 mo en mp4
+        np.save(full_path, video) #uncompressed file -> 1 Go for a video of 2-10 mo in mp4
     """
-    ##option 2 : mettre les path dans des arrays 
+    ## option 2 : put paths as features in arrays 
     data = storage
-    print(f"data: {data}")
 
     labels = meta_labels 
-    print(f"labels: {labels}")
 
+    print("Spliting data in train/test sets...")
     data_train, data_test, labels_train, labels_test = train_test_split(data, labels, test_size=0.20)
 
-    print(data_train.shape)
-    print(labels_train.shape)
-    print(data_test.shape)
-    print(labels_test.shape)
-
+    print("# of train data points: ", data_train.shape[0])
+    print("# of test data points: ", data_test.shape[0])
+ 
     return (data_train, labels_train), (data_test, labels_test)
 
 file_path = os.path.dirname(__file__)
@@ -88,11 +84,12 @@ test_data_path = os.path.join(data_path, 'test')
 assets_path = os.path.join(root_path, "assets")
 
 # the data, split between train and test sets
+# (train features, train labels), (test features, test labels)
 (x_train, y_train), (x_test, y_test) = load_data_DFDC(os.path.join('data', "DFDC"))
-# train features, train labels, test features, test labels
 
+print("Data will be generated in : ", os.path.abspath(assets_path))
 # number of data samples for the train and test sets
-N_TRAIN_DATA_SAMPLES = 80
+N_TRAIN_DATA_SAMPLES = 80 #80 => 4 videos/sample
 N_TEST_DATA_SAMPLES = 20
 
 train_test_configs = [
@@ -118,11 +115,9 @@ train_test_configs = [
 for conf in train_test_configs:
     kf = KFold(n_splits=conf['n_samples'])
     splits_x = kf.split(conf['features'])
-    
     splits_y = kf.split(conf['labels'])
-    print(kf)
+
     for _, index in splits_x:
-        print(index)
         conf['data_samples_content_x'].append(conf['features'][index])
     for _, index in splits_y:
         conf['data_samples_content_y'].append(conf['labels'][index])
@@ -140,6 +135,7 @@ for conf in train_test_configs:
 
 
 """
+#function used in option 1
 def read_video(path):
     cap = cv2.VideoCapture(path)
     frameCount = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

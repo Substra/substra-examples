@@ -1,7 +1,7 @@
 # A Substra example for Deepfakes Detection
 
 *This example is a Substra implementation of a deepfake detector.
-The Algo is based on the [inference demo Kaggle notebook](https://www.kaggle.com/humananalog/inference-demo) and use the [DFDC dataset from Kaggle](https://www.kaggle.com/c/deepfake-detection-challenge)
+The Algo is based on the [inference demo Kaggle notebook](https://www.kaggle.com/humananalog/inference-demo) and use the [DFDC dataset from Kaggle](https://www.kaggle.com/c/deepfake-detection-challenge).
 The structure of the example is inspired from [Substra's Titanic Example](https://github.com/SubstraFoundation/substra/blob/master/examples/titanic/)*
 
 ## Prerequisites
@@ -14,27 +14,31 @@ In order to run this example, you'll need to:
 * [install the `substratools` library](https://github.com/substrafoundation/substra-tools)
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
 * create a substra profile to define the substra network to target, for instance:
-    ```sh
-    substra config --profile node-1 http://substra-backend.node-1.com
-    substra login --profile node-1 --username node-1 --password 'p@$swr0d44'
-    ```
+
+```sh
+substra config --profile node-1 http://substra-backend.node-1.com
+substra login --profile node-1 --username node-1 --password 'p@$swr0d44'
+```
+
 * checkout this repository
 
 All commands in this example are run from the `deepfake-detection` folder.
 
 ## Data preparation
 
-The first step will be to generate train and test data samples from the (Kaggle challenge source)[https://www.kaggle.com/c/deepfake-detection-challenge/data]. 
+The first step will be to generate train and test data samples from the [Kaggle challenge source](https://www.kaggle.com/c/deepfake-detection-challenge/data).
 Click on the link, sign-up or login to Kaggle and download the data samples (Dowload All button)
 then copy-paste train_samples_videos in the data/DFDC folder of the example
 
 To generate the data samples, run:
+
 ```sh
 pip install -r scripts/requirements.txt
 python scripts/generate_data_samples.py
 ```
 
 This will create two sub-folders in the `assets` folder:
+
 * `train_data` contains train data features and labels as numpy array files
 * `test_data` contains test data features and labels as numpy array files
 
@@ -60,7 +64,7 @@ the train and predict tasks but also a lot of data preprocessing.
 
 ```sh
 
-#for a quicker prediction test, you can change --data-samples-path to a specific data sample
+#for a quicker test, you can change --data-samples-path to a specific data sample
 
 python assets/algo/algo_inference.py train \
   --debug \
@@ -137,9 +141,7 @@ It's more than probable that your code won't run perfectly the first time. Since
 debug using prints. Instead, you should use the `logging` module from python. All logs can then be consulted at the end
 of the run in  `sandbox/model/log_model.log`.
 
-## Adding the assets to substra
-
-# TODO
+## TODO: Adding the assets to substra
 
 ### Adding the objective, dataset and data samples to substra
 
@@ -158,7 +160,6 @@ This script just generated an `assets_keys.json` file in the `deepfake-detection
 we've just created and organizes the keys of the train data samples in folds. This file will be used as input when
 adding an algorithm so that we can automatically launch all training and testing tasks.
 
-
 ### Adding the algorithm and training it
 
 The script `add_train_algo_inference.py` pushes our simple algo to substra and then uses the `assets_keys.json` file
@@ -173,4 +174,3 @@ python scripts/add_train_algo_inference.py
 
 It will end by providing a couple of commands you can use to track the progress of the train and test tuples as well
 as the associated scores. Alternatively, you can browse the frontend to look up progress and scores.
-
