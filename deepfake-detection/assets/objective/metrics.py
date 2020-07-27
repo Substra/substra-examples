@@ -3,9 +3,12 @@ from sklearn.metrics import log_loss
 import substratools as tools
 
 
-class MnistMetrics(tools.Metrics):
+class Metrics(tools.Metrics):
     def score(self, y_true, y_pred):
-        """Returns the macro-average recall
+        """
+        Returns the average score using log_loss metric [0;∞[.
+        0.693 is the non-informative value 
+        (obtained by always predicting p = 0.5 in a balanced binary problem)
 
         :param y_true: actual values from test data
         :type y_true: pd.DataFrame
@@ -19,4 +22,4 @@ class MnistMetrics(tools.Metrics):
 
 
 if __name__ == "__main__":
-    tools.metrics.execute(MnistMetrics())
+    tools.metrics.execute(Metrics())

@@ -128,7 +128,6 @@ class Algo(tools.algo.Algo):
     def train(self, X_files, y, models, rank):
        
         print("Loading features...")
-
         train_videos = X_files
         y_true = y
         print("Nb of train videos:", len(train_videos))
@@ -145,18 +144,26 @@ class Algo(tools.algo.Algo):
         #init and load the face extractor (implemented in deepfakes-inference-demo/helpers/face_extract_1)
         self.face_extractor = self._load_face_extractor()
 
-        #TODO
-        #X = self._normalize_X(X)
+        if not models: #if input model is not given
+            print("no input model, creating a new one")
+            model = self._init_new_model()
+            #load a pretrained Resnet on ImageNet for the deepfake detection model (result : 0.7268 on train_data_samples_0 to 4)
+            """ model scores:
+            result on train_data_samples_0 to 4 when trained on 0_4: 0.4787
+            result on train_data_samples_0 to 4 when trained on all train_data_damples: 0.4557
+            result on test_data_samples when trained on all train_data_damples: 0.5779 
+            result on test_data_samples when trained 2* on all train_data_damples: 0.5733 (on cpu: Elapsed 4918.225055 sec. Average per video: 15.369453 sec)
+            """
+            self.fc = nn.Linear(2048, 1000)
+            checkpoint = torch.load("assets/algo/deepfakes-inference-demo/resnext50_32x4d-7cdf4587.pth")
+            model.load_state_dict(checkpoint)
+            # Override the existing FC layer with a new one.
+            model.fc = nn.Linear(2048, 1)
+            del checkpoint
+        else: 
+            model = models[0]
+            print("training input model", model.__name__)
 
-        model = self._init_new_model()
-        #load a pretrained Resnet on ImageNet for the deepfake detection model (result : 0.7268 on train_data_samples_0 to 4)
-        #results when trained on 0_4 : 0.4787
-        self.fc = nn.Linear(2048, 1000)
-        checkpoint = torch.load("assets/algo/deepfakes-inference-demo/resnext50_32x4d-7cdf4587.pth")
-        model.load_state_dict(checkpoint)
-        # Override the existing FC layer with a new one.
-        model.fc = nn.Linear(2048, 1)
-        del checkpoint
         #Freeze the early layers of the model
         self._freeze_until(model, "layer4.0.conv1.weight")
 
@@ -210,7 +217,9 @@ class Algo(tools.algo.Algo):
         #init model 
         model = self._init_new_model()
 
-        #load a pretrained Resnet on ImageNet+DFDC for the deepfake detection model (result : 0.3639 on train_data_samples_0 to 4)
+        #load a pretrained Resnet on ImageNet+DFDC for the deepfake detection model 
+        #result : 0.3639 on train_data_samples_0 to 4
+        # 0.3299 on test_data_samples
         checkpoint = torch.load("assets/algo/deepfakes-inference-demo/resnext.pth", map_location=self.gpu) 
         model.load_state_dict(checkpoint)
         """
@@ -448,7 +457,7 @@ class Algo(tools.algo.Algo):
         #except Exception as e:
             #print("Error on video %s: %s" % (video_path, str(e)))
 
-        #return model, bce_loss, epochs_done
+        return model, 0
 
 if __name__ == "__main__":
     tools.algo.execute(Algo())
