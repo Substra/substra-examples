@@ -13,7 +13,7 @@ class Opener(tools.Opener):
 
         for folder in folders:
 
-            X_files_current = Path(folder).rglob('x*.npy')
+            X_files_current = Path(folder).rglob('x*.mp4')
             y_files_current = Path(folder).rglob('y*.npy')
 
             X_files.extend(X_files_current)
@@ -27,10 +27,7 @@ class Opener(tools.Opener):
         print("Finding features file...")
         X_files, _ = self._get_files(folders)
 
-        X_paths = []
-        for X_file in X_files:
-            X_paths.append(np.load(X_file))
-        X_paths = np.concatenate(X_paths)
+        X_paths = np.array(X_files)
         return X_paths
 
     def get_y(self, folders):
@@ -56,7 +53,9 @@ class Opener(tools.Opener):
         return pd.read_csv(path)
 
     def fake_X(self):
-        return np.random.randn(22, 28, 28).astype(np.float32)
+        #TODO
+        return None
 
     def fake_y(self):
-        return np.random.choice(np.arange(10), size=(22)).astype(np.int)
+        #TODO
+        return None

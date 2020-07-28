@@ -6,9 +6,9 @@ deepfake-detection example
 import os
 import numpy as np
 import pandas as pd
-import pathlib
 from sklearn.model_selection import KFold, train_test_split
 import cv2
+from shutil import copyfile
 
 def get_meta_from_json(path):
     df = pd.read_json(path)
@@ -16,7 +16,7 @@ def get_meta_from_json(path):
     return df
 
 def load_data_DFDC(data_path):
-    DFDC_FOLDER = pathlib.Path(data_path)
+    DFDC_FOLDER = data_path
     print(f"Loading DFDC data from {DFDC_FOLDER}")
 
     #load data
@@ -46,6 +46,8 @@ def load_data_DFDC(data_path):
     meta_labels = np.array(list(meta_df.label))
 
     storage = np.array([os.path.join(DFDC_FOLDER, DATA_FOLDER, file) for file in train_list if  file.endswith('mp4')])
+    #storage = np.array([os.path.join(file) for file in train_list if  file.endswith('mp4')])
+
     print(f"# of files in metadata: {meta.shape[0]}, # of videos: {storage.shape[0]}")
 
 
@@ -124,14 +126,23 @@ for conf in train_test_configs:
 
 # save data samples
 for conf in train_test_configs:
+    """
     for i, data_sample in enumerate(conf['data_samples_content_x']):
-        filename = os.path.join(conf['data_samples_root'], f'data_sample_{i}/features/x_data_sample_{i}.npy')
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
-        np.save(filename,data_sample)
+        filepath = os.path.join(conf['data_samples_root'], f'data_sample_{i}/features/x_data_sample_{i}.npy')
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        np.save(filepath,data_sample)
+    """
+    for i, data_sample in enumerate(conf['data_samples_content_x']):
+        
+        filepath = os.path.join(conf['data_samples_root'], f'data_sample_{i}/features/x_data_sample_{i}_')
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        for file in data_sample:
+            copyfile(file, str(filepath+os.path.basename(file)))
+
     for i, data_sample in enumerate(conf['data_samples_content_y']):
-        filename = os.path.join(conf['data_samples_root'], f'data_sample_{i}/labels/y_data_sample_{i}.npy')
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
-        np.save(filename,data_sample)
+        filepath = os.path.join(conf['data_samples_root'], f'data_sample_{i}/labels/y_data_sample_{i}.npy')
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        np.save(filepath,data_sample)
 
 
 """
