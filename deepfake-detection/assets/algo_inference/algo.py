@@ -18,8 +18,6 @@ from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
 import torch.nn.functional as F
 
-
-
 class MyResNeXt(models.resnet.ResNet):
     """
         The ResNeXt model is a very simple binary image classifier using BCELoss. 
@@ -112,16 +110,6 @@ class Algo(tools.algo.Algo):
                 epochs_done += 1
                 print("Epoch: %3d, train BCE: %.4f" % (epochs_done, bce_loss))
                 
-                """
-                val_bce_loss = evaluate(model, val_loader, device=gpu, silent=True)
-                history["val_bce"].append(val_bce_loss)
-                
-                print("              val BCE: %.4f" % (val_bce_loss))
-
-                # TODO: can do LR annealing here
-                # TODO: can save checkpoint here
-                print("")
-                """
                 
         return model
 
@@ -131,6 +119,7 @@ class Algo(tools.algo.Algo):
         train_videos = X_files
         y_true = y
         print("Nb of train videos:", len(train_videos))
+
         print("PyTorch version:", torch.__version__)
         print("CUDA version:", torch.version.cuda)
         print("cuDNN version:", torch.backends.cudnn.version())
@@ -139,7 +128,7 @@ class Algo(tools.algo.Algo):
         self.gpu = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         print("torch.device: ", self.gpu)
 
-        print("Current working directory:", os.getcwd())
+        print(f"Current working directory: {os.getcwd()}")
 
         #init and load the face extractor (implemented in deepfakes-inference-demo/helpers/face_extract_1)
         self.face_extractor = self._load_face_extractor()
@@ -267,9 +256,8 @@ class Algo(tools.algo.Algo):
         """
 
         try:
-
+            print(f"extracting faces from: {video_path}")
             # Find the faces for N frames in the video.
-            print("extracting faces from: "+ video_path)
             #extract face crops for each frames in the video
             faces = face_extractor.process_video(video_path)
             # Only look at one face per frame.
@@ -312,6 +300,8 @@ class Algo(tools.algo.Algo):
                         y_pred = model(x)
                         y_pred = torch.sigmoid(y_pred.squeeze())
                         return y_pred[:n].mean().item()
+
+            print("no face found")
 
         except Exception as e:
             print("Prediction error on video %s: %s" % (video_path, str(e)))
@@ -390,11 +380,8 @@ class Algo(tools.algo.Algo):
 
     def _train_on_video(self, video_path, label, batch_size, model, face_extractor):
     
-
-        #try:
-
         # Find the faces for N frames in the video.
-        print("extracting faces from: "+ video_path)
+        print(f"extracting faces from: {video_path}")
         #extract face crops for each frames in the video
         faces = face_extractor.process_video(video_path)
         # Only look at one face per frame.
@@ -454,8 +441,7 @@ class Algo(tools.algo.Algo):
 
                 return model, batch_bce
 
-        #except Exception as e:
-            #print("Error on video %s: %s" % (video_path, str(e)))
+        print("no face found")
 
         return model, 0
 
