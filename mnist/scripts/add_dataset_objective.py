@@ -46,13 +46,13 @@ DATASET = {
 }
 
 TEST_DATA_SAMPLES_PATHS = [
-    os.path.join(assets_directory, 'test_data_samples', path)
-    for path in os.listdir(os.path.join(assets_directory, 'test_data_samples'))
+    os.path.join(assets_directory, 'test_data', path)
+    for path in os.listdir(os.path.join(assets_directory, 'test_data'))
 ]
 
 TRAIN_DATA_SAMPLES_PATHS = [
-    os.path.join(assets_directory, 'train_data_samples', path)
-    for path in os.listdir(os.path.join(assets_directory, 'train_data_samples'))
+    os.path.join(assets_directory, 'train_data', path)
+    for path in os.listdir(os.path.join(assets_directory, 'train_data'))
 ]
 
 OBJECTIVE = {
