@@ -2,7 +2,7 @@
 FROM substrafoundation/substra-tools:0.6.0
 
 # install dependencies
-RUN pip3 install Keras==2.3.1 tensorflow==2.2.0
+RUN pip3 install tensorflow==2.3.0 numpy==1.19.1
 
 # add your algorithm script to docker image
 ADD algo.py .
