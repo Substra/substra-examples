@@ -3,6 +3,7 @@
 *This example is a Substra implementation of on [the MNIST example from Keras](https://keras.io/examples/vision/mnist_convnet/), inspired from [Substra's Titanic Example](https://github.com/SubstraFoundation/substra/blob/master/examples/titanic/)*
 
 In this example, we'll see how to setup an objective and how to train algorithms on the MNIST dataset.
+
 ## Prerequisites
 
 In order to run this example, you'll need to:
@@ -13,26 +14,30 @@ In order to run this example, you'll need to:
 * [install the `substratools` library](https://github.com/substrafoundation/substra-tools)
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
 * create a substra profile to define the substra network to target, for instance:
+
     ```sh
     substra config --profile node-1 http://substra-backend.node-1.com
     substra login --profile node-1 --username node-1 --password 'p@$swr0d44'
     ```
+
 * checkout this repository
 
 All commands in this example are run from the `mnist` folder.
 
 ## Data preparation
 
-The first step will be to generate train and test data samples from keras.datasets.mnist
+The first step will be to generate train and test data from keras.datasets.mnist
 
+To generate the data, run:
 
-To generate the data samples, run:
 ```sh
+pip install --upgrade pip
 pip install -r scripts/requirements.txt
-python scripts/generate_data_samples.py
+python scripts/generate_data.py
 ```
 
 This will create two sub-folders in the `assets` folder:
+
 * `train_data` contains train data features and labels as numpy array files
 * `test_data` contains test data features and labels as numpy array files
 
@@ -153,7 +158,6 @@ This script just generated an `assets_keys.json` file in the `mnist` folder. Thi
 we've just created and organizes the keys of the train data samples in folds. This file will be used as input when
 adding an algorithm so that we can automatically launch all training and testing tasks.
 
-
 ### Adding the algorithm and training it
 
 The script `add_train_algo_cnn.py` pushes our simple algo to substra and then uses the `assets_keys.json` file
@@ -168,5 +172,3 @@ python scripts/add_train_algo_cnn.py
 
 It will end by providing a couple of commands you can use to track the progress of the train and test tuples as well
 as the associated scores. Alternatively, you can browse the frontend to look up progress and scores.
-
-
