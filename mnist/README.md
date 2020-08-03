@@ -121,11 +121,11 @@ python assets/objective/metrics.py \
 
 ### Using substra cli
 
-Before pushing our assets to the platform, we need to make sure they work well. To do so, we can run them locally. This
-way, if the training fails, we can access the logs and debug our code.
+Before pushing our assets to the platform, we need to make sure they work well. To do so, we can run them locally in a
+Docker container. This way, if the training fails, we can access the logs and debug our code.
 
 To test the assets, we'll use `substra run-local`, passing it paths to our algorithm of course, but also the opener,
-the metrics and to the data samples we want to use.
+the metrics and to the data samples we want to use. It will launch a training task on the train data, a prediction task on the test data and return the accuracy score.
 
 ```sh
 substra run-local assets/algo_cnn \
