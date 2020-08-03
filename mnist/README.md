@@ -10,9 +10,10 @@ In order to run this example, you'll need to:
 
 * use Python 3
 * have [Docker](https://www.docker.com/) installed
-* [install the `substra` cli](https://github.com/SubstraFoundation/substra#install)
-* [install the `substratools` library](https://github.com/substrafoundation/substra-tools)
+* [install the `substra` cli](https://github.com/SubstraFoundation/substra#install) (supported version: 0.6.0)
+* [install the `substratools` library](https://github.com/substrafoundation/substra-tools) (supported version: 0.6.0)
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
+* have access to a Substra installation ([configure your host to a public node ip](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html#network) or [install Substra on your machine](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html))
 * create a substra profile to define the substra network to target, for instance:
 
     ```sh
@@ -59,10 +60,13 @@ the train and predict tasks but also a lot of data preprocessing.
 
 ### Using asset command line interfaces
 
+You can first test each assets with the `substratools` CLI, by running specific ML tasks in your local Python environment.
+
 #### Training task
 
 ```sh
 
+#train your model with the train_data
 python assets/algo_cnn/algo.py train \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -70,7 +74,7 @@ python assets/algo_cnn/algo.py train \
   --output-model-path assets/model/model \
   --log-path assets/logs/train.log
 
-
+#predict the labels of train_data with your previously trained model
 python assets/algo_cnn/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -80,6 +84,7 @@ python assets/algo_cnn/algo.py predict \
   --log-path assets/logs/train_predict.log \
   model
 
+#calculate the score of your model on train_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -94,6 +99,7 @@ python assets/objective/metrics.py \
 
 ```sh
 
+#predict the labels of test_data with your previously trained model
 python assets/algo_cnn/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -102,7 +108,8 @@ python assets/algo_cnn/algo.py predict \
   --models-path assets/model/ \
   --log-path assets/logs/test_predict.log \
   model
-  
+
+#calculate the score of your model on test_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
