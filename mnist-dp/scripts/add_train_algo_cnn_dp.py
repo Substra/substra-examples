@@ -9,26 +9,26 @@ assets_directory = os.path.join(current_directory, '../assets')
 
 client = substra.Client(profile_name="node-1")
 
-ALGO_KEYS_JSON_FILENAME = 'algo_cnn_keys.json'
+ALGO_KEYS_JSON_FILENAME = 'algo_cnn_dp_keys.json'
 
 ALGO = {
-    'name': 'Mnist: CNN',
-    'description': os.path.join(assets_directory, 'algo_cnn/description.md'),
+    'name': 'Mnist: CNN with DP',
+    'description': os.path.join(assets_directory, 'algo_cnn_dp/description.md'),
     'permissions': {
         'public': False,
         'authorized_ids': []
     },
 }
 ALGO_DOCKERFILE_FILES = [
-        os.path.join(assets_directory, 'algo_cnn/algo.py'),
-        os.path.join(assets_directory, 'algo_cnn/Dockerfile'),
+        os.path.join(assets_directory, 'algo_cnn_dp/algo.py'),
+        os.path.join(assets_directory, 'algo_cnn_dp/Dockerfile'),
 ]
 
 ########################################################
 #       Build archive
 ########################################################
 
-archive_path = os.path.join(current_directory, 'algo_cnn.zip')
+archive_path = os.path.join(current_directory, 'algo_cnn_dp.zip')
 with zipfile.ZipFile(archive_path, 'w') as z:
     for filepath in ALGO_DOCKERFILE_FILES:
         z.write(filepath, arcname=os.path.basename(filepath))
@@ -82,7 +82,7 @@ assert testtuple_key, 'Missing testtuple key'
 #         Save keys in json
 ########################################################
 
-assets_keys['algo_cnn'] = {
+assets_keys['algo_cnn_dp'] = {
     'algo_key': algo_key,
     'traintuple_key': traintuple_key,
     'testtuple_key': testtuple_key,
