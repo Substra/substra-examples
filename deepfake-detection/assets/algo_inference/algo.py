@@ -153,6 +153,9 @@ class Algo(tools.algo.Algo):
             model = models[0]
             print("training input model", model.__name__)
 
+        if torch.cuda.is_available(): 
+            model.cuda()
+
         #Freeze the early layers of the model
         self._freeze_until(model, "layer4.0.conv1.weight")
 
