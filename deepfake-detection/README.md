@@ -10,9 +10,10 @@ In order to run this example, you'll need to:
 
 * use Python 3
 * have [Docker](https://www.docker.com/) installed
-* [install the `substra` cli](https://github.com/SubstraFoundation/substra#install)
-* [install the `substratools` library](https://github.com/substrafoundation/substra-tools)
+* [install the `substra` cli](https://github.com/SubstraFoundation/substra#install) (supported version: 0.6.0)
+* [install the `substratools` library](https://github.com/substrafoundation/substra-tools) (supported version: 0.6.0)
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
+* have access to a Substra installation ([configure your host to a public node ip](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html#network) or [install Substra on your machine](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html))
 * create a substra profile to define the substra network to target, for instance:
 
 ```sh
@@ -78,11 +79,14 @@ the train and predict tasks but also a lot of data preprocessing.
 
 ### Using asset command line interfaces
 
+You can first test each assets with the `substratools` CLI, by running specific ML tasks in your local Python environment.
+
 #### Training task
 
 ```sh
-#for a quicker test, you can change --data-samples-path to a specific data sample
+#for a quicker test, you can change --data-samples-path to a specific data sample, (e.g. assets/train_data_samples/data_sample_0)
 
+#train your model with the train_data
 python assets/algo_inference/algo.py train \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -90,6 +94,7 @@ python assets/algo_inference/algo.py train \
   --output-model-path assets/model/model \
   --log-path assets/logs/train.log
 
+#predict the labels of train_data with your previously trained model
 python assets/algo_inference/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -99,6 +104,7 @@ python assets/algo_inference/algo.py predict \
   --log-path assets/logs/train_predict.log \
   model
 
+#calculate the score of your model on train_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -112,6 +118,7 @@ python assets/objective/metrics.py \
 #### Testing task
 
 ```sh
+#predict the labels of test_data with your previously trained model
 python assets/algo_inference/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -121,6 +128,7 @@ python assets/algo_inference/algo.py predict \
   --log-path assets/logs/test_predict.log \
   model
 
+#calculate the score of your model on test_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -132,11 +140,11 @@ python assets/objective/metrics.py \
 
 ### Using substra cli
 
-Before pushing our assets to the platform, we need to make sure they work well. To do so, we can run them locally. This
-way, if the training fails, we can access the logs and debug our code.
+Before pushing our assets to the platform, we need to make sure they work well. To do so, we can run them locally in a
+Docker container. This way, if the training fails, we can access the logs and debug our code.
 
 To test the assets, we'll use `substra run-local`, passing it paths to our algorithm of course, but also the opener,
-the metrics and to the data samples we want to use.
+the metrics and to the data samples we want to use. It will launch a training task on the train data, a prediction task on the test data and return the accuracy score.
 
 ```sh
 substra run-local assets/algo_inference \
@@ -157,7 +165,7 @@ It's more than probable that your code won't run perfectly the first time. Since
 debug using prints. Instead, you should use the `logging` module from python. All logs can then be consulted at the end
 of the run in  `sandbox/model/log_model.log`.
 
-## TODO: Adding the assets to substra
+## Adding the assets to substra
 
 ### Adding the objective, dataset and data samples to substra
 
