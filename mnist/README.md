@@ -4,6 +4,8 @@
 
 In this example, we'll see how to setup an objective and how to train algorithms on the MNIST dataset.
 
+You can run this example in Google Colab or JupyterLab with this [Notebook](Mnist_Substra_Example_Notebook.ipynb).
+
 ## Prerequisites
 
 In order to run this example, you'll need to:
