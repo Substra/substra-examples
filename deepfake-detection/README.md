@@ -4,6 +4,8 @@
 The Algo is based on the [inference demo Kaggle notebook](https://www.kaggle.com/humananalog/inference-demo) and use the [DFDC dataset from Kaggle](https://www.kaggle.com/c/deepfake-detection-challenge).
 The structure of the example is inspired from [Substra's Titanic Example](https://github.com/SubstraFoundation/substra/blob/master/examples/titanic/)*
 
+You can run this example in Google Colab or JupyterLab with this [Notebook](Deepfake_Detection_Substra_Example_Notebook.ipynb).
+
 ## Prerequisites
 
 In order to run this example, you'll need to:
