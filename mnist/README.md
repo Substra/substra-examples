@@ -65,8 +65,7 @@ You can first test each assets with the `substratools` CLI, by running specific 
 #### Training task
 
 ```sh
-
-#train your model with the train_data
+# train your model with the train_data
 python assets/algo_cnn/algo.py train \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -74,7 +73,7 @@ python assets/algo_cnn/algo.py train \
   --output-model-path assets/model/model \
   --log-path assets/logs/train.log
 
-#predict the labels of train_data with your previously trained model
+# predict the labels of train_data with your previously trained model
 python assets/algo_cnn/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -84,7 +83,7 @@ python assets/algo_cnn/algo.py predict \
   --log-path assets/logs/train_predict.log \
   model
 
-#calculate the score of your model on train_data predictions
+# calculate the score of your model on train_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -92,14 +91,12 @@ python assets/objective/metrics.py \
   --input-predictions-path assets/pred-train.npy \
   --output-perf-path assets/perf-train.json \
   --log-path assets/logs/train_metrics.log
-  
  ```
 
 #### Testing task
 
 ```sh
-
-#predict the labels of test_data with your previously trained model
+# predict the labels of test_data with your previously trained model
 python assets/algo_cnn/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -109,7 +106,7 @@ python assets/algo_cnn/algo.py predict \
   --log-path assets/logs/test_predict.log \
   model
 
-#calculate the score of your model on test_data predictions
+# calculate the score of your model on test_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -179,3 +176,4 @@ python scripts/add_train_algo_cnn.py
 
 It will end by providing a couple of commands you can use to track the progress of the train and test tuples as well
 as the associated scores. Alternatively, you can browse the frontend to look up progress and scores.
+
