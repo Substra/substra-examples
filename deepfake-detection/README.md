@@ -34,9 +34,9 @@ The first step will be to download the data from the [Kaggle challenge source](h
 * Sign-up or login to [Kaggle](https://www.kaggle.com/) and accept the [competitions rules](https://www.kaggle.com/c/deepfake-detection-challenge/rules).
 * Download the data samples (4Go) manually (`Download All` at the bottom of the [data section](https://www.kaggle.com/c/deepfake-detection-challenge/data)), or install & configure the [Kaggle API](https://github.com/Kaggle/kaggle-api) and execute the following command:
 
-  ```sh
-  kaggle competitions download -c deepfake-detection-challenge
-  ```
+```sh
+kaggle competitions download -c deepfake-detection-challenge
+```
 
 * Extract the zip file and copy-paste the 'train_sample_videos' folder in the data/DFDC folder of the example.
 
@@ -84,9 +84,9 @@ You can first test each assets with the `substratools` CLI, by running specific 
 #### Training task
 
 ```sh
-#for a quicker test, you can change --data-samples-path to a specific data sample, (e.g. assets/train_data_samples/data_sample_0)
+# for a quicker test, you can change --data-samples-path to a specific data sample, (e.g. assets/train_data_samples/data_sample_0)
 
-#train your model with the train_data
+# train your model with the train_data
 python assets/algo_inference/algo.py train \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -94,7 +94,7 @@ python assets/algo_inference/algo.py train \
   --output-model-path assets/model/model \
   --log-path assets/logs/train.log
 
-#predict the labels of train_data with your previously trained model
+# predict the labels of train_data with your previously trained model
 python assets/algo_inference/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -104,7 +104,7 @@ python assets/algo_inference/algo.py predict \
   --log-path assets/logs/train_predict.log \
   model
 
-#calculate the score of your model on train_data predictions
+# calculate the score of your model on train_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -112,13 +112,12 @@ python assets/objective/metrics.py \
   --input-predictions-path assets/pred-train.csv \
   --output-perf-path assets/perf-train.json \
   --log-path assets/logs/train_metrics.log
-  
  ```
 
 #### Testing task
 
 ```sh
-#predict the labels of test_data with your previously trained model
+# predict the labels of test_data with your previously trained model
 python assets/algo_inference/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -128,7 +127,7 @@ python assets/algo_inference/algo.py predict \
   --log-path assets/logs/test_predict.log \
   model
 
-#calculate the score of your model on test_data predictions
+# calculate the score of your model on test_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -198,3 +197,4 @@ python scripts/add_train_algo_inference.py
 
 It will end by providing a couple of commands you can use to track the progress of the train and test tuples as well
 as the associated scores. Alternatively, you can browse the frontend to look up progress and scores.
+
