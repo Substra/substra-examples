@@ -26,10 +26,10 @@ In order to run this example, you'll need to:
 * have access to a Substra installation ([configure your host to a public node ip](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html#network) or [install Substra on your machine](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html))
 * create a substra profile to define the substra network to target, for instance:
 
-    ```sh
-    substra config --profile node-1 http://substra-backend.node-1.com
-    substra login --profile node-1 --username node-1 --password 'p@$swr0d44'
-    ```
+```sh
+substra config --profile node-1 http://substra-backend.node-1.com
+substra login --profile node-1 --username node-1 --password 'p@$swr0d44'
+```
 
 * checkout this repository
 
@@ -85,7 +85,7 @@ You can first test each assets with the `substratools` CLI, by running specific 
 #### Training task
 
 ```sh
-#train your model with the train_data
+# train your model with the train_data
 python assets/algo_cnn_dp/algo.py train \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -93,7 +93,7 @@ python assets/algo_cnn_dp/algo.py train \
   --output-model-path assets/model/model \
   --log-path assets/logs/train.log
 
-#predict the labels of train_data with your previously trained model
+# predict the labels of train_data with your previously trained model
 python assets/algo_cnn_dp/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -103,7 +103,7 @@ python assets/algo_cnn_dp/algo.py predict \
   --log-path assets/logs/train_predict.log \
   model
 
-#calculate the score of your model on train_data predictions
+# calculate the score of your model on train_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -111,13 +111,12 @@ python assets/objective/metrics.py \
   --input-predictions-path assets/pred-train.npy \
   --output-perf-path assets/perf-train.json \
   --log-path assets/logs/train_metrics.log
-  
- ```
+```
 
 #### Testing task
 
 ```sh
-#predict the labels of test_data with your previously trained model
+# predict the labels of test_data with your previously trained model
 python assets/algo_cnn_dp/algo.py predict \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -127,7 +126,7 @@ python assets/algo_cnn_dp/algo.py predict \
   --log-path assets/logs/test_predict.log \
   model
 
-#calculate the score of your model on test_data predictions
+# calculate the score of your model on test_data predictions
 python assets/objective/metrics.py \
   --debug \
   --opener-path assets/dataset/opener.py \
@@ -197,3 +196,4 @@ python scripts/add_train_algo_cnn_dp.py
 
 It will end by providing a couple of commands you can use to track the progress of the train and test tuples as well
 as the associated scores. Alternatively, you can browse the frontend to look up progress and scores.
+
