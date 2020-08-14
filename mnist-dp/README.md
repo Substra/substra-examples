@@ -23,7 +23,7 @@ In order to run this example, you'll need to:
 * [install the `substra` cli](https://github.com/SubstraFoundation/substra#install) (supported version: 0.6.0)
 * [install the `substratools` library](https://github.com/substrafoundation/substra-tools) (supported version: 0.6.0)
 * [pull the `substra-tools` docker images](https://github.com/substrafoundation/substra-tools#pull-from-private-docker-registry)
-* have access to a Substra installation ([configure your host to a public node ip](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html#network) or [install Substra on your machine](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html))
+* have access to a Substra installation ([configure your host to a public node ip](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html#network) or [install Substra on your machine](https://doc.substra.ai/getting_started/installation/local_install_skaffold.html)). Check that this installation is [compatible](https://github.com/SubstraFoundation/substra#compatibility-table) with your CLI version.
 * create a substra profile to define the substra network to target, for instance:
 
 ```sh
