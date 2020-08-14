@@ -19,7 +19,7 @@ num_classes = 10
 epochs = 1
 batch_size = 250
 
-# DP-SGD privacy-specific hyperparameters
+# DP-SGD privacy-specific hyperparameters. See description.md for more information.
 l2_norm_clip = 1.5
 noise_multiplier = 1.3
 num_microbatches = 250

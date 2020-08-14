@@ -76,6 +76,8 @@ This value depends on:
 3. The `noise_multiplier`.
 4. The number of `epochs` of training.
 
+You can find a description of the hyperparameters [here](https://github.com/tensorflow/privacy/tree/master/tutorials#parameters).
+
 ## Testing our assets
 
 ### Using asset command line interfaces
