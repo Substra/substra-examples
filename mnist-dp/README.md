@@ -2,6 +2,9 @@
 
 *This example is a Substra implementation of on the [Classification_Privacy tutorial](https://github.com/tensorflow/privacy/blob/master/tutorials/Classification_Privacy.ipynb) from [Tensorflow_Privacy](https://github.com/tensorflow/privacy). The structure of this example is inspired from [Substra's Titanic Example](https://github.com/SubstraFoundation/substra/blob/master/examples/titanic/)*
 
+You can run this example in Google Colab or JupyterLab with this [Notebook](Mnist_DP_Substra_Example_Notebook.ipynb
+).
+
 > [Differential privacy](https://en.wikipedia.org/wiki/Differential_privacy) (DP) is a framework for measuring the privacy guarantees provided by an algorithm. Through the lens of differential privacy, we can design machine learning algorithms that responsibly train models on private data. Learning with differential privacy provides provable guarantees of privacy, mitigating the risk of exposing sensitive training data in machine learning. Intuitively, a model trained with differential privacy should not be affected by any single training example, or small set of training examples, in its data set. This mitigates the risk of exposing sensitive training data in ML.
 >  
 > The basic idea of this approach, called differentially private stochastic gradient descent (DP-SGD), is to modify the gradients used in stochastic gradient descent (SGD), which lies at the core of almost all deep learning algorithms. Models trained with DP-SGD provide provable differential privacy guarantees for their input data. There are two modifications made to the vanilla SGD algorithm:
