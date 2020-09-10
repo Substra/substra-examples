@@ -2,6 +2,11 @@
 
 The purpose of this repository is to gather community driven examples of Substra use cases in order to provide extra pedagogical materials to the official [Substra examples](https://github.com/SubstraFoundation/substra/tree/master/examples).
 
+Currently available examples and use cases:
+
+- [MNIST with differential privacy](./mnist-dp/README.md)
+- [Deepfake detection](./deepfake-detection/README.md)
+
 > :warning: **Please note that these examples are maintained with a best effort policy by the community, implying that everything might not be perfectly up-to-date.**
 
 Still, you should find some perks helping you grasp the Substra framework.
