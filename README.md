@@ -4,6 +4,7 @@ The purpose of this repository is to gather community driven examples of Substra
 
 Currently available examples and use cases:
 
+- [MNIST](./mnist/README.md)
 - [MNIST with differential privacy](./mnist-dp/README.md)
 - [Deepfake detection](./deepfake-detection/README.md)
 
