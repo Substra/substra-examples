@@ -1,0 +1,1 @@
+RUN chmod -R 777 /home/ubuntu/HAM/data/
