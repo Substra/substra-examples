@@ -23,7 +23,6 @@ class HAMAlgo(tools.Algo):
 
         model_ft = models.resnet50(use_pretrained)
 
-        # print(current_directory, flush=True)
         if not predict:
             if use_pretrained:
                 pretrained_model = torch.load(weight_path)

@@ -73,8 +73,6 @@ for i, data_sample in enumerate(train_data_sample_content):
     for el in data_sample.iterrows():
         shutil.copy(el[1]['image_path'], folder_name)
         df_train.loc[df_train['image_id']==el[1]['image_id'], 'image_path'] = os.path.join(
-            # docker_name, 
-            # folder_name,
             el[1]['image_id'] + '.jpg')
         df_train.loc[df_train['image_id']==el[1]['image_id'], 'folder'] = folder_name.split('/')[-1]
 os.makedirs(os.path.join(train_data_path, f'csv'))
