@@ -12,19 +12,9 @@ asset_ds_path = os.path.join(root_path, '../HAM10000_DS/assets/')
 
 # load dataset
 data_path = './data'
-# data_path = '/home/apricity/celine/HAM10000_skin_cancer/sources'
 source = pd.read_csv(os.path.join(data_path,'HAM10000_metadata.csv'))
 metadata = source.copy()
 
-#keep only some of them
-# n_keep = 50
-# metadata = source.loc[:n_keep,:].copy()
-# metadata = pd.concat([metadata, source.loc[1100:1100+n_keep,:].copy()])
-# metadata = pd.concat([metadata, source.loc[1220:1220+n_keep,:].copy()])
-# metadata = pd.concat([metadata, source.loc[2330:2330+n_keep,:].copy()])
-# metadata = pd.concat([metadata, source.loc[2470:2470+n_keep,:].copy()])
-# metadata = pd.concat([metadata, source.loc[2980:2980+n_keep,:].copy()])
-# metadata = pd.concat([metadata, source.loc[9700:9700+n_keep,:].copy()])
 print(metadata['dx'].value_counts())
 
 num_classes = len(metadata['dx'].unique())
