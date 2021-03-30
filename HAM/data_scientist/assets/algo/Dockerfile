@@ -9,9 +9,7 @@ RUN chmod -R 777 /model
 
 # install dependencies
 RUN pip3 install pandas numpy sklearn pillow scipy 
-#tensorflow  pickle-mixin
 RUN pip3 install torch torchvision
-#RUN pip3 install keras==2.2.4
 
 # add your algorithm script to docker image
 COPY resnet50-19c8e357.pth /model/
