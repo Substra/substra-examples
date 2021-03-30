@@ -1,17 +1,3 @@
-"""
-run locally
-substra run-local ./assets/algo --train-opener=../HAM10000_DE/assets/dataset/opener.py --test-opener=assets/dataset/opener.py --metrics=assets/objective/ --train-data-samples=../HAM10000_DE/assets/data --test-data-samples=assets/data
-
-python HAM10000_DS/assets/algo/algo.py train --debug --opener-path HAM10000_DE/assets/dataset/opener.py --data-samples-path HAM10000_DE/assets/data --output-model-path HAM10000_DS/assets/model/model --log-path HAM10000_DS/train.log
-
-python HAM10000_DS/assets/algo/algo.py predict --debug --opener-path HAM10000_DS/assets/dataset/opener.py --data-samples-path HAM10000_DS/assets/data --output-predictions-path pred/pred-train.csv  --models-path HAM10000_DS/assets/model --log-path HAM10000_DS/train_predict.log model
-
-python HAM10000_DS/assets/objective/metrics.py --debug --opener-path HAM10000_DS/assets/dataset/opener.py --data-samples-path HAM10000_DS/assets/data --input-predictions-path pred/pred-train --output-perf-path perf-train.json
-
-"""
-
-
-# import pickle
 import logging
 
 import numpy as numpy
@@ -28,11 +14,6 @@ from torch.autograd import Variable
 
 logger = logging.getLogger(__name__)
 current_directory = os.path.dirname(__file__)
-
-# import sys
-# print(os.path.abspath('./'), flush=True)
-# sys.stdout = open('/sandbox/logs', 'w')
-# lzekhf
 
 class HAMAlgo(tools.Algo):
 
@@ -58,7 +39,6 @@ class HAMAlgo(tools.Algo):
         num_classes = 7
         print(os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', True))
         if os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', True):
-            # shutil.move('./HAM10000_DS/assets/algo/resnet50-19c8e357.pth', '/sandbox/model/resnet50-19c8e357.pth')
             weight_path = './HAM10000_DS/assets/algo/resnet50-19c8e357.pth'
         else:
             shutil.move('/model/resnet50-19c8e357.pth', '/sandbox/model/resnet50-19c8e357.pth')
@@ -72,7 +52,6 @@ class HAMAlgo(tools.Algo):
         print('Device available: ' + dev)
         device = torch.device(dev)
 
-        # print('Model to be initialized', flush=True)
         model, input_size = self.initialize_model(num_classes=num_classes,
                                                   use_pretrained=False,
                                                   weight_path=weight_path)
