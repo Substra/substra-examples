@@ -8,7 +8,7 @@ RUN mkdir /model
 RUN chmod -R 777 /model
 
 # install dependencies
-RUN pip3 install pandas numpy sklearn pillow scipy 
+RUN pip3 install pandas numpy 
 RUN pip3 install torch torchvision
 
 # add your algorithm script to docker image
