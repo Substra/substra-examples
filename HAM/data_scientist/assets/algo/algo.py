@@ -36,12 +36,8 @@ class HAMAlgo(tools.Algo):
     def train (self, X, y, models, rank):
         
         num_classes = 7
-        print(os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', True))
-        if os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', True):
-            weight_path = './HAM10000_DS/assets/algo/resnet50-19c8e357.pth'
-        else:
-            shutil.move('/model/resnet50-19c8e357.pth', '/sandbox/model/resnet50-19c8e357.pth')
-            weight_path = '/sandbox/model/resnet50-19c8e357.pth'
+        root_path = os.path.dirname(__file__)
+        weight_path = os.path.join(root_path,"resnet.pth")
 
         if torch.cuda.is_available():
             dev = 'cuda:0'

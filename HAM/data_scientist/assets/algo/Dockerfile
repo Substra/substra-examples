@@ -12,7 +12,7 @@ RUN pip3 install pandas numpy
 RUN pip3 install torch torchvision
 
 # add your algorithm script to docker image
-COPY resnet50-19c8e357.pth /model/
+COPY resnet50-19c8e357.pth .
 ADD algo.py .
 
 # define how script is run
