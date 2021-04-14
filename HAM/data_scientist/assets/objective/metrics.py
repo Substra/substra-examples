@@ -14,8 +14,12 @@ class HAM10000Metrics(tools.Metrics):
         :rtype: float
         """
 
-        y_true = y_true[0].numpy()
-        y_pred = y_pred[0].numpy()
+        y_true_np = []
+        y_pred_np = []
+        for i in np.arange(len(y_true)):
+            y_true_np.append(y_true[i].numpy()[0])
+            y_pred_np.append(y_pred[i].numpy()[0])
+            
         return accuracy_score(y_true, y_pred)
 
 
