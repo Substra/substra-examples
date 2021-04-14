@@ -84,7 +84,6 @@ class HAMOpener(tools.Opener):
         for path in paths_csv:
             df_train = pd.read_csv(path)
             df_train['dx_idx'] = pd.Categorical(df_train['dx']).codes
-        # norm_mean, norm_std = self.calculate_mean_std(df_train['filename'].to_list())
 
         train_transform = transforms.Compose([transforms.Resize((224, 224)),
                                             # transforms.RandomHorizontalFlip(),
@@ -108,32 +107,4 @@ class HAMOpener(tools.Opener):
             y.append(j)
 
         return X, y
-
-    # @classmethod
-    # def calculate_mean_std(cls, paths):
-
-    #     (img_h, img_w) = (224, 224)
-    #     imgs = []
-    #     means, stds = [], []
-
-    #     for i in tqdm(range(len(paths))):
-    #         img = cv2.imread(paths[i])
-    #         img = cv2.resize(img, (img_h, img_w))
-    #         imgs.append(img)
-
-    #     imgs = np.stack(imgs, axis=3)
-    #     imgs = imgs/255.
-
-    #     for i in range(3):
-    #         pixels = imgs[:, :, i, :].ravel()
-    #         means.append(np.mean(pixels))
-    #         stds.append(np.std(pixels))
-
-    #     print("normMean = {}".format(means))
-    #     print("normStd = {}".format(stds))
-
-    #     return means, stds
-
-    
-
 
